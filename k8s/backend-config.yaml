@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: backend-config
+  labels:
+    app: backend-api
+    group: backend
+data:
+  DATABASE_NAME: vorto
+  DATABASE_USERNAME: postgres
+  DATABASE_PASSWORD: admin*123

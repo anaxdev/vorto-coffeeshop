@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: postgres
+  labels:
+    app: postgres
+    group: db
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: postgres
+  template:
+    metadata:
+      labels:
+        app: postgres
+        type: db
+    spec:
+      volumes:
+        - name: postgres-db
+          persistentVolumeClaim:
+            claimName: postgres-pv-claim
+        - name: postgres-db-init
+          configMap:
+            name: pg-init-script
+      containers:
+        - name: postgres
+          image: postgres:12
+          imagePullPolicy: "IfNotPresent"
+          ports:
+            - containerPort: 5432
+          envFrom:
+            - configMapRef:
+                name: postgres-config
+          volumeMounts:
+            - name: postgres-db
+              mountPath: /var/lib/postgresql/data
+            - name: postgres-db-init
+              mountPath: /docker-entrypoint-initdb.d/coffee.sql

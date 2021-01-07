@@ -26,7 +26,29 @@ If everything is ok, `http://localhost:8080/` or `http://server-address:8080/` s
 
 ## Deploy on Kubernetes cluster
 
-TODO:
+Push API docker image to dockerhub (or any other docker registry).
+
+```sh
+docker login
+docker push anadk/vorto-coffeeshop-api:1.0
+```
+
+> Note: docker registry name for api image should be changed according to the own registry.
+
+
+Create a ConfigMap for database initialization script
+
+```sh
+kubectl create configmap pg-init-script \
+--from-literal=coffee.sql="$(curl -fsSL https://raw.githubusercontent.com/anaxdev/vorto-coffeeshop/main/sql/coffee.sql)"
+```
+
+Deploy all applications into Kubernetes cluster
+```sh
+git clone https://github.com/anaxdev/vorto-coffeeshop.git
+cd vorto-coffeeshop
+kubectl apply -f ./k8s
+```
 
 
 ## Test API endpoints
