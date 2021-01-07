@@ -1,0 +1,46 @@
+version: '3.5'
+
+services:
+  db:
+    image: postgres:12
+    container_name: db
+    restart: always
+    networks:
+      - vorto
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./sql/coffee.sql:/docker-entrypoint-initdb.d/coffee.sql
+    environment:
+      POSTGRES_PASSWORD: admin*123
+  api:
+    image: anadk/vorto-coffeeshop-api:1.0
+    container_name: api
+    build:
+      context: ./api
+      dockerfile: Dockerfile
+    restart: always
+    networks:
+      - vorto
+    ports:
+      - "8080:8080"
+    environment:
+      DATABASE_HOST: db
+      DATABASE_NAME: postgres
+      DATABASE_USERNAME: postgres
+      DATABASE_PASSWORD: admin*123
+    depends_on:
+      - db
+  # DB admin tool
+  adminer:
+    image: adminer
+    container_name: db_adminer
+    restart: always
+    networks:
+      - vorto
+    ports:
+      - 8081:8080
+
+networks:
+  vorto:
+    name: vorto
