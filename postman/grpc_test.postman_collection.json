@@ -1,0 +1,73 @@
+{
+	"info": {
+		"_postman_id": "6de9533c-7b35-441c-9f1b-5bab31987922",
+		"name": "grpc_test",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "delivery",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "bean_type_id",
+							"value": "2",
+							"type": "text"
+						},
+						{
+							"key": "carrierIdStr",
+							"value": "1",
+							"type": "text"
+						},
+						{
+							"key": "supplierIdStr",
+							"value": "1",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://192.168.1.42:8080/delivery",
+					"protocol": "http",
+					"host": [
+						"192",
+						"168",
+						"1",
+						"42"
+					],
+					"port": "8080",
+					"path": [
+						"delivery"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "statistics",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://192.168.1.42:8080/statistics",
+					"protocol": "http",
+					"host": [
+						"192",
+						"168",
+						"1",
+						"42"
+					],
+					"port": "8080",
+					"path": [
+						"statistics"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
