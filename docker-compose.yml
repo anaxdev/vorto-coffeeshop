@@ -1,9 +1,9 @@
 version: '3.5'
 
 services:
-  db:
+  postgres:
     image: postgres:12
-    container_name: db
+    container_name: postgres
     restart: always
     networks:
       - vorto
@@ -25,21 +25,23 @@ services:
     ports:
       - "8080:8080"
     environment:
-      DATABASE_HOST: db
+      DATABASE_HOST: postgres
       DATABASE_NAME: postgres
       DATABASE_USERNAME: postgres
       DATABASE_PASSWORD: admin*123
     depends_on:
-      - db
+      - postgres
   # DB admin tool
   adminer:
     image: adminer
-    container_name: db_adminer
+    container_name: adminer
     restart: always
     networks:
       - vorto
     ports:
       - 8081:8080
+    environment:
+      ADMINER_DEFAULT_SERVER: postgres
 
 networks:
   vorto:
