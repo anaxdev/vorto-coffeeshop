@@ -4,11 +4,11 @@ import (
 	"log"
 	"strconv"
 
-	"github.com/anaxdev/go-microservice/pkg/config"
-	delivery "github.com/anaxdev/go-microservice/pkg/grpc"
-	"github.com/anaxdev/go-microservice/pkg/server"
-	"github.com/anaxdev/go-microservice/pkg/service"
 	"github.com/gorilla/mux"
+	"github.com/vorto-coffeeshop/api/pkg/config"
+	delivery "github.com/vorto-coffeeshop/api/pkg/grpc"
+	"github.com/vorto-coffeeshop/api/pkg/server"
+	"github.com/vorto-coffeeshop/api/pkg/service"
 )
 
 func main() {

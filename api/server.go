@@ -6,9 +6,9 @@ import (
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/reflection"
 
-	"github.com/anaxdev/go-microservice/pkg/config"
-	delivery "github.com/anaxdev/go-microservice/pkg/grpc"
-	"github.com/anaxdev/go-microservice/pkg/service"
+	"github.com/vorto-coffeeshop/api/pkg/config"
+	delivery "github.com/vorto-coffeeshop/api/pkg/grpc"
+	"github.com/vorto-coffeeshop/api/pkg/service"
 )
 
 func main() {

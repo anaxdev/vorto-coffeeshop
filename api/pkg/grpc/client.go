@@ -6,7 +6,7 @@ import (
 
 	"google.golang.org/grpc"
 
-	"github.com/anaxdev/go-microservice/pkg/service"
+	"github.com/vorto-coffeeshop/api/pkg/service"
 )
 
 var defaultRequestTimeout = time.Second * 10

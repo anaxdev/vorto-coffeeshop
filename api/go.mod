@@ -1,4 +1,4 @@
-module github.com/anaxdev/go-microservice
+module github.com/vorto-coffeeshop/api
 
 go 1.13
 

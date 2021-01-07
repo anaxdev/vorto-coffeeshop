@@ -3,7 +3,7 @@ package grpc
 import (
 	"context"
 
-	"github.com/anaxdev/go-microservice/pkg/service"
+	"github.com/vorto-coffeeshop/api/pkg/service"
 )
 
 type deliveryController struct {
