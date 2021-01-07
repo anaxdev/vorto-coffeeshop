@@ -18,7 +18,7 @@ docker-compose build api
 Run system
 
 ```sh
-docker-compose up --build -d
+docker-compose up -d
 ```
 
 If everything is ok, `http://localhost:8080/` or `http://server-address:8080/` should show the API welcome page.
