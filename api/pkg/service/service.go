@@ -5,8 +5,8 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/anaxdev/go-microservice/models"
 	"github.com/jinzhu/gorm"
+	"github.com/vorto-coffeeshop/api/models"
 )
 
 var ErrNotFound = errors.New("not found")
@@ -65,11 +65,37 @@ func (s *service) Delivery(request *DeliveryRequest) (*DeliveryResponse, error) 
 		UpdatedAt:  time.Now(),
 	}
 
-	// s.Conn.Debug().Table("delivery").Create(&entry)
 	s.Conn.Table("delivery").Create(&entry)
 	return &DeliveryResponse{Status: 0, Message: "success"}, nil
 }
 
 func (s *service) Statistics(request *StatisticsRequest) (*StatisticsResponse, error) {
-	return &StatisticsResponse{}, nil
+	type ValidCount struct {
+		ValidDeliveriesCount  int64 `gorm:"column:valid_deliveries_count; type:integer;" json:"valid_deliveries_count"`
+	}
+
+	type DeliveryCount struct {
+		Deliveries  int64 `gorm:"column:all_deliveries_count; type:integer;" json:"all_deliveries_count"`
+	}
+
+	var beans []models.BeanType
+	s.Conn.Table("bean_type").Scan(&beans)
+
+	var delivery DeliveryCount
+	sql := `select (select count(*) as c from supplier) * (select count(*) from driver) * (select count(*) from bean_type) as all_deliveries_count`
+	s.Conn.Raw(sql).Scan(&delivery)
+	if delivery.Deliveries == 0 {
+		return &StatisticsResponse{}, nil
+	}
+
+	var validCount int64
+	for _, bean := range beans {
+		sql := `select (select count(*) from supplier_bean_type where bean_type_id=%d) * (select count(d.id) from carrier_bean_type cb, driver d where cb.bean_type_id=%d and cb.carrier_id = d.carrier_id) as valid_deliveries_count`
+		query := fmt.Sprintf(sql, bean.Id, bean.Id)
+		var count ValidCount
+		s.Conn.Raw(query).Scan(&count)
+		validCount += count.ValidDeliveriesCount
+	}
+
+	return &StatisticsResponse{Percent: (validCount * 100) / delivery.Deliveries}, nil
 }
